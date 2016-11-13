@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Проверка скобок</title>
+    <script>
+    function check() {
+        var st = document.getElementById('text').value;
+        var strlen = st.length;
+        var stack = [];
+        var state = 'OK';
+        for (i = 0; i < strlen; i++) {
+            switch (st[i]) {
+                case '(':
+                case '[':
+                case '{':
+                    stack.push(st[i]);
+                    break;
+                case ')':
+                    if (stack.length == 0) { state = 'Плохо'; }
+                    if (stack[stack.length - 1] == '(') stack.pop();
+                    break;
+                case ']':
+                    if (stack.length == 0) { state = 'Плохо';}
+                    if (stack[stack.length - 1] == '[') stack.pop();
+                    break;
+                case '}':
+                    if (stack.length == 0) { state = 'Плохо';}
+                    if (stack[stack.length - 1] == '{') stack.pop();
+                    break;
+                default:
+                    state = 'BAD';
+                    alert('Некорректный символ!');
+            }
+        }
+        if (stack.length == 0 && state == 'OK') {
+            alert('Все хорошо!');
+        }
+        else {
+            alert('Хьюстон, что-то пошло не так!');
+        }
+        }
+    </script>
+    <style>
+        form {
+            display : block;
+            width : 500px;
+            height : 300px;
+            margin : 0 auto;
+            text-align : center;
+            padding-top : 100px;
+        }
+        body {
+            background-color : white;
+            color : black;
+            font-weight: bold;
+            font-family: Helvetica;
+            font-size: 24px;
+        }
+        input {
+            margin: 10px 20px;
+            width: 400px;
+        }
+
+</style>
+</head>
+<body>
+<form onsubmit="check()">
+    Введите фрагмет скобок для проверки:<br/>
+    <input id="text" type="text" value=""><br/>
+    <input type="submit" value="Проверить">
+</form>
+</body>
+</html>
